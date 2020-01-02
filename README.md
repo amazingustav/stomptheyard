@@ -1,7 +1,7 @@
 # Stomp the Yard
 
 <h1 align="center">
-  <img alt="dance gif" src="dance.gif"/>
+  <img src="/src/main/resources/static/dance.gif"/>
 </h1>
 
 An ideal music provider for you in a perfect occasion.
