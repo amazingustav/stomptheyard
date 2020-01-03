@@ -1,6 +1,7 @@
 package br.com.amazing.stomptheyard.usecases.service;
 
-import br.com.amazing.stomptheyard.usecases.connector.RetrofitConnector;
+import br.com.amazing.stomptheyard.usecases.connector.OpenWeatherConnector;
+import br.com.amazing.stomptheyard.usecases.connector.SpotifyConnector;
 import br.com.amazing.stomptheyard.usecases.connector.RetrofitConnectorFactory;
 import br.com.amazing.stomptheyard.web.output.Music;
 import br.com.amazing.stomptheyard.web.output.Playlist;
@@ -11,25 +12,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlaylistService {
 
-    private RetrofitConnectorFactory connector;
+    private SpotifyConnector spotifyConnector;
+    private OpenWeatherConnector weatherConnector;
 
     @Autowired
     public PlaylistService(RetrofitConnectorFactory connector) {
-        this.connector = connector;
+        this.spotifyConnector = connector.createSpotifyConnector();
+        this.weatherConnector = connector.createOpenWeatherConnector();
     }
 
     public Playlist getPlaylist(String city, Long latitude, Long longitude) {
-        var connector = this.connector.create();
-
-        return city != null ? getPlaylistFromCity(connector, city)
-            : getPlaylistFromCoordinates(connector, latitude, longitude);
+        return city != null ? getPlaylistFromCity(city)
+            : getPlaylistFromCoordinates(latitude, longitude);
     }
 
-    private Playlist getPlaylistFromCity(RetrofitConnector connector, String city) {
+    private Playlist getPlaylistFromCity(String city) {
         return buildDefaultResponse();
     }
 
-    private Playlist getPlaylistFromCoordinates(RetrofitConnector connector, Long latitude, Long longitude) {
+    private Playlist getPlaylistFromCoordinates(Long latitude, Long longitude) {
         return buildDefaultResponse();
     }
 
